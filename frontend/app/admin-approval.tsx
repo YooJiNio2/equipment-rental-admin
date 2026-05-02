@@ -13,7 +13,7 @@ export default function AdminApprovalScreen() {
 
   return (
     <View style={styles.container}>
-      {/* 상단 헤더 */}
+      
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Text style={styles.backText}>{"<"}</Text>
@@ -23,7 +23,7 @@ export default function AdminApprovalScreen() {
       </View>
 
       <ScrollView style={styles.content}>
-        {/* 전체 대기자 요약 카드 */}
+       
         <View style={styles.summaryCard}>
           <Text style={styles.summaryLabel}>전체 대기자</Text>
           <Text style={styles.summaryValue}>15 명</Text>
@@ -31,7 +31,7 @@ export default function AdminApprovalScreen() {
 
         <Text style={styles.listTitle}>이름/학번 정보</Text>
         
-        {/* 대기 유저 리스트: 카드 전체를 TouchableOpacity로 감싸서 클릭 가능하게 함 */}
+        
         {WAITING_USERS.map((user) => (
           <TouchableOpacity 
             key={user.id} 
@@ -43,7 +43,7 @@ export default function AdminApprovalScreen() {
                 <Text style={styles.userName}>{user.name}</Text>
                 <Text style={styles.userId}>{user.studentId}</Text>
               </View>
-              {/* 버튼 대신 '확인 필요' 상태 표시(배지)로 변경 */}
+              
               <View style={styles.statusBadge}>
                 <Text style={styles.statusBadgeText}>학생증 미확인</Text>
               </View>
@@ -52,7 +52,7 @@ export default function AdminApprovalScreen() {
             <Text style={styles.userMajor}>[전공/학년] {user.major}</Text>
             <Text style={styles.userDate}>가입 신청: {user.date}</Text>
             
-            {/* 하단에 안내 문구 추가 */}
+            
             <View style={styles.guideRow}>
               <Text style={styles.guideText}>상세보기 및 승인 처리 {'>'}</Text>
             </View>

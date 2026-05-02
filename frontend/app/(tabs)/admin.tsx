@@ -34,7 +34,7 @@ export default function AdminScreen() {
 
         <TouchableOpacity 
   style={[styles.card, { backgroundColor: '#FF4D4D' }]}
-  onPress={() => router.push('/admin-inventory')} // 알림센터 대신 인벤토리(기자재 관리)로 연결
+  onPress={() => router.push('/admin-inventory')} 
 >
   <Text style={styles.cardTitle}>연체 중 물품</Text>
   <Text style={styles.cardValue}>3 건</Text>
@@ -52,7 +52,7 @@ export default function AdminScreen() {
           <Text style={styles.cardSub}>반납 처리 및 상태 관리</Text>
         </TouchableOpacity>
         
-        {/* 파손/분실 관리 카드 추가 (기존 비어있던 공간 활용) */}
+        
         <TouchableOpacity 
           style={[styles.card, { backgroundColor: '#6C757D' }]}
           onPress={() => router.push('/admin-inventory')}
@@ -63,7 +63,7 @@ export default function AdminScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* 빠른 가기 버튼 섹션 */}
+      
       <View style={styles.buttonRow}>
         <TouchableOpacity 
           style={styles.actionButton}

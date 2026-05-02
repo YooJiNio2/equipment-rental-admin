@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 
-// 1. DB schema.sql에 정의된 상태값(status)을 반영한 더미 데이터
+
 const INVENTORY_DATA = [
   { id: '1', name: '아두이노 키트 01', status: 'AVAILABLE', statusKor: '대여 가능', user: '-', color: '#00C853' },
   { id: '2', name: '맥북에어 05', status: 'RENTED', statusKor: '대여 중', user: '이영희', color: '#2E5BFF' },
