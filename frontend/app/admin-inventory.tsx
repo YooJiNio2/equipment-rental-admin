@@ -1,14 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 
-// 임시 기자재 데이터
+// 1. DB schema.sql에 정의된 상태값(status)을 반영한 더미 데이터
 const INVENTORY_DATA = [
-  { id: '1', name: '아두이노 키트 01', status: '대여 가능', user: '-', color: '#00C853' },
-  { id: '2', name: '맥북에어 05', status: '대여 중', user: '이영희', color: '#2E5BFF' },
-  { id: '3', name: '라즈베리 파이 02', status: '수리 중', user: '-', color: '#FF9800' },
-  { id: '4', name: '아두이노 키트 02', status: '대여 가능', user: '-', color: '#00C853' },
-  { id: '5', name: '그램 01', status: '연체', user: '박철수', color: '#FF4D4D' },
+  { id: '1', name: '아두이노 키트 01', status: 'AVAILABLE', statusKor: '대여 가능', user: '-', color: '#00C853' },
+  { id: '2', name: '맥북에어 05', status: 'RENTED', statusKor: '대여 중', user: '이영희', color: '#2E5BFF' },
+  { id: '3', name: '라즈베리 파이 02', status: 'BROKEN', statusKor: '파손', user: '-', color: '#FF9800' },
+  { id: '4', name: '보조배터리 03', status: 'LOST', statusKor: '분실', user: '-', color: '#6C757D' },
+  { id: '5', name: '그램 01', status: 'OVERDUE', statusKor: '연체', user: '박철수', color: '#FF4D4D' },
+  { id: '6', name: '라즈베리 파이 01', status: 'PARTIAL_LOST', statusKor: '부분 분실', user: '조현민', color: '#FD7E14' },
 ];
 
 export default function AdminInventoryScreen() {
@@ -27,14 +28,17 @@ export default function AdminInventoryScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* 필터 탭 (와이어프레임 상단 부분) */}
+      {/* 필터 탭 - DB 상태 종류에 맞춰 확장 */}
       <View style={styles.filterRow}>
-        <TouchableOpacity style={[styles.filterChip, styles.filterActive]}>
-          <Text style={styles.filterActiveText}>전체</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.filterChip}><Text>대여 중</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.filterChip}><Text>대여 가능</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.filterChip}><Text>파손/수리</Text></TouchableOpacity>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <TouchableOpacity style={[styles.filterChip, styles.filterActive]}>
+            <Text style={styles.filterActiveText}>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.filterChip}><Text>대여 중</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.filterChip}><Text>대여 가능</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.filterChip}><Text>연체</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.filterChip}><Text>파손/분실</Text></TouchableOpacity>
+        </ScrollView>
       </View>
 
       <ScrollView style={styles.content}>
@@ -45,14 +49,17 @@ export default function AdminInventoryScreen() {
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemUser}>현재 사용자: {item.user}</Text>
               </View>
-              <View style={[styles.statusBadge, { backgroundColor: item.color + '15' }]}>
-                <Text style={[styles.statusText, { color: item.color }]}>{item.status}</Text>
+              {/* 상태 배지 - 배경색 투명도 조절로 깔끔하게 표시 */}
+              <View style={[styles.statusBadge, { backgroundColor: item.color + '20' }]}>
+                <Text style={[styles.statusText, { color: item.color }]}>{item.statusKor}</Text>
               </View>
             </View>
             
             <View style={styles.itemFooter}>
               <TouchableOpacity style={styles.subBtn}><Text style={styles.subBtnText}>이력 보기</Text></TouchableOpacity>
+              {/* 상태 변경 버튼 - 파손/분실 로그 작성을 위한 용도 */}
               <TouchableOpacity style={styles.subBtn}><Text style={styles.subBtnText}>상태 변경</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.subBtn}><Text style={[styles.subBtnText, {color: '#FF4D4D'}]}>파손/분실 등록</Text></TouchableOpacity>
             </View>
           </View>
         ))}
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
   itemMain: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
   itemName: { fontSize: 16, fontWeight: 'bold', color: '#1A1A1A' },
   itemUser: { fontSize: 13, color: '#777', marginTop: 4 },
-  statusBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
+  statusBadge: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 8 },
   statusText: { fontSize: 12, fontWeight: 'bold' },
   itemFooter: { flexDirection: 'row', borderTopWidth: 1, borderTopColor: '#F8F9FA', paddingTop: 10 },
   subBtn: { marginRight: 15 },

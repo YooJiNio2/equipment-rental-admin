@@ -4,21 +4,28 @@ import { useRouter } from 'expo-router';
 
 // 임시 데이터
 const NOTI_DATA = [
-  { id: '1', type: 'OVERDUE', message: '김학생님의 아두이노 키트 01이 연체되었습니다.', time: '10분 전', isRead: false },
-  { id: '3', type: 'BROKEN', message: '박철수님이 라즈베리 파이 파손 보고를 접수했습니다.', time: '1시간 전', isRead: false },
-  { id: '4', type: 'ACCOUNT_PENDING', message: '신규 사용자 최민수님의 가입 승인 대기 중입니다.', time: '3시간 전', isRead: true },
+  { id: '1', type: 'OVERDUE', message: '⚠️ [연체] 김학생님의 맥북에어 01번의 반납 기한이 지났습니다.', time: '방금 전', isRead: false },
+  { id: '2', type: 'BROKEN', message: '🛠️ [파손 보고] 이학생님의 라즈베리 파이 03번의 케이스 파손을 접수했습니다.', time: '10분 전', isRead: false },
+  { id: '3', type: 'LOST', message: '📍 [분실 보고] 박학생님이 아두이노 키트의 센서 분실을 신고했습니다.', time: '1시간 전', isRead: false },
+  { id: '4', type: 'ACCOUNT_APPROVED', message: '✅ [승인 완료] 신규 사용자 이철수님의 가입 승인이 완료되었습니다.', time: '3시간 전', isRead: true },
+  { id: '5', type: 'ACCOUNT_REJECTED', message: '❌ [승인 거절] 김학생님의 학생증 식별 불가로 가입이 거절되었습니다.', time: '5시간 전', isRead: true },
+  { id: '6', type: 'PARTIAL_LOST', message: '⚠️ [부분 분실] 맥북 충전기가 반납되지 않았습니다.', time: '어제', isRead: true },
 ];
-
 
 const getBadgeColor = (type: string) => {
   switch (type) {
-    case 'OVERDUE': return '#FF4D4D'; // 빨강
-    case 'RETURNED': return '#00C853'; // 초록
-    case 'BROKEN': return '#FF9800'; // 주황
-    case 'ACCOUNT_PENDING': return '#2E5BFF'; // 파랑
-    default: return '#999999'; // 회색
+    case 'OVERDUE': return '#FF4D4D';         
+    case 'BROKEN':                           
+    case 'LOST':                             
+    case 'PARTIAL_LOST': return '#FF9800';    
+    case 'ACCOUNT_APPROVED': return '#2E5BFF'; 
+    case 'RETURNED': return '#00C853';        
+    case 'ACCOUNT_REJECTED': return '#666666'; 
+    default: return '#999999';
   }
 };
+
+
 
 export default function AdminNotificationScreen() {
   const router = useRouter();
